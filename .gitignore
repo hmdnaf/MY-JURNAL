@@ -1,0 +1,52 @@
+# ============================================================
+# .gitignore
+# Purpose: Prevent large data, secrets, and temp files from entering Git
+# Project: SegFormer Land Cover Mapping - Sulawesi Selatan
+# ============================================================
+
+# Geospatial and Training Data
+data/raw/
+data/interim/
+data/processed/
+data/patches/
+# Note: Keep data/splits/ tracked if they contain small CSV files, but ignore if large
+# data/splits/
+
+# Model Checkpoints and Weights
+models/
+*.pth
+*.pt
+*.onnx
+
+# Evaluation and Inference Outputs
+outputs/
+
+# Environment and Credentials
+.env
+.env.*
+.venv/
+env/
+venv/
+ENV/
+*.pem
+*.key
+*token*
+*credential*
+credentials.json
+client_secrets.json
+
+# Python Cache and Build Files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+*.ipynb
+
+# Temporary Files and System Files
+*.tmp
+*.temp
+*.tif.aux.xml
+.DS_Store
+Thumbs.db

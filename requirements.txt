@@ -1,0 +1,56 @@
+# ==============================================================================
+# SegFormer Land-Cover South Sulawesi - Project Dependency Specification
+#
+# Target Python Version : Python 3.12.x (Conservative stable runtime target)
+# Local Execution Role  : CPU-only development, documentation, QGIS sample
+#                         auditing, tests, and lightweight windowed raster I/O
+# Training Execution    : Google Colab GPU (Cloud-accelerated SegFormer training)
+#
+# IMPORTANT RULES & NOTES:
+# 1. Do NOT install into the QGIS Desktop bundled Python environment.
+# 2. Local machine has an integrated AMD Radeon GPU (no NVIDIA CUDA available);
+#    local execution uses CPU-only PyTorch and windowed reading via Rasterio.
+# 3. The exact PyTorch CUDA wheel build will be selected and resolved during
+#    the future Google Colab environment setup phase.
+# 4. TASK 1.3 defines dependency specifications only; package installation is
+#    NOT performed by this task.
+# ==============================================================================
+
+# Core utilities
+PyYAML>=6.0,<7.0
+tqdm>=4.66,<5.0
+Pillow>=10.4,<13.0
+pandas>=2.2,<3.0
+
+# Scientific computing
+numpy>=2.0,<3.0
+scipy>=1.13,<2.0
+
+# Geospatial processing
+rasterio>=1.4.4,<2.0
+geopandas>=1.0,<2.0
+shapely>=2.0,<3.0
+pyproj>=3.6,<4.0
+fiona>=1.10,<2.0
+
+# Visualization and evaluation
+matplotlib>=3.9,<4.0
+scikit-learn>=1.5,<2.0
+
+# Deep learning and SegFormer
+torch>=2.4,<3.0
+torchvision>=0.19,<1.0
+transformers>=4.49,<6.0
+accelerate>=1.0,<2.0
+safetensors>=0.4,<1.0
+huggingface-hub>=0.27,<2.0
+torchmetrics>=1.4,<2.0
+tensorboard>=2.17,<3.0
+
+# Dataset and augmentation
+datasets>=3.0,<5.0
+albumentations>=1.4,<3.0
+opencv-python-headless>=4.10,<5.0
+
+# Development and testing
+pytest>=8.0,<10.0

@@ -1,0 +1,111 @@
+2026-08-02T19:47:11+08:00 - TASK 0.1 EXECUTION
+=============================================
+TASK ID: TASK 0.1
+TASK NAME: Verify Project Scope
+STATUS: PASS
+
+FILES CREATED:
+- file:///h:/segFormer/logs/scope_audit.md
+
+FILES MODIFIED:
+- file:///h:/segFormer/TASK.md
+- file:///h:/segFormer/ROADMAP.md
+
+ACTIONS PERFORMED:
+- Menerapkan grep_search untuk mencari kata kunci "Maros", "Kabupaten Maros", "Pulau Sulawesi", dan "seluruh Indonesia" di seluruh dokumen proyek.
+- Mengonfirmasi keselarasan ruang lingkup proyek resmi: Provinsi Sulawesi Selatan, Sentinel-2, ESA WorldCover v200, SegFormer-B0, pemrosesan GEE, dan training Google Colab.
+- Membuat berkas laporan audit logs/scope_audit.md.
+- Memperbarui status TASK 0.1 di TASK.md menjadi PASS dan menyelaraskan antrean eksekusi.
+- Mengubah referensi "TASK_detailed.md" menjadi "TASK.md" di ROADMAP.md serta memperbarui status Milestone 0 menjadi IN_PROGRESS.
+
+VALIDATION EXECUTED:
+- Melakukan verifikasi runtime dan pencarian string pada file dokumentasi.
+
+VALIDATION RESULT:
+- PASS. Semua referensi wilayah yang salah (seperti Kabupaten Maros) telah dieliminasi dan hanya terdapat dalam bentuk pengecualian formal atau batasan di PRD.md.
+
+ERRORS OR WARNINGS:
+- Nihil.
+
+USER ACTION REQUIRED:
+- Nihil.
+
+NEXT TASK:
+- TASK 0.2 — Create Safe Ignore Rules
+=============================================
+
+2026-08-02T19:57:01+08:00 - TASK 0.2 EXECUTION
+=============================================
+TASK ID: TASK 0.2
+TASK NAME: Create Safe Ignore Rules
+STATUS: PASS
+
+FILES CREATED:
+- file:///h:/segFormer/.gitignore
+
+FILES MODIFIED:
+- file:///h:/segFormer/TASK.md
+- file:///h:/segFormer/ROADMAP.md
+
+ACTIONS PERFORMED:
+- Membuat berkas .gitignore di workspace root.
+- Mengonfigurasi pengecualian untuk folder data geospasial besar (data/raw/, data/interim/, data/processed/, data/patches/), folder checkpoint model (models/), folder output metrik/peta (outputs/), berkas konfigurasi rahasia (.env, credentials), serta cache Python dan Jupyter notebook (*.ipynb, .ipynb_checkpoints/, __pycache__/).
+- Memperbarui status TASK 0.2 di TASK.md menjadi PASS dan antrean eksekusi agar TASK 1.1 menjadi NEXT.
+- Memperbarui status MILESTONE 0 di ROADMAP.md menjadi PASS karena seluruh tugas di dalamnya telah diselesaikan.
+
+VALIDATION EXECUTED:
+- Verifikasi aturan .gitignore terhadap persyaratan geospasial deep learning (memastikan data besar, checkpoint, dan rahasia terabaikan, namun kode sumber, konfigurasi, dan dokumentasi tetap terlacak).
+
+VALIDATION RESULT:
+- PASS. Berkas .gitignore telah sesuai dengan spesifikasi dan kriteria penerimaan.
+
+ERRORS OR WARNINGS:
+- Nihil.
+
+USER ACTION REQUIRED:
+- Nihil.
+
+NEXT TASK:
+- TASK 1.1 — Create Project Folder Structure
+=============================================
+
+2026-08-02T19:57:58+08:00 - TASK 1.1 EXECUTION
+=============================================
+TASK ID: TASK 1.1
+TASK NAME: Create Project Folder Structure
+STATUS: PASS
+
+FILES CREATED:
+- file:///h:/segFormer/logs/project_tree.txt
+- Seluruh direktori proyek beserta berkas .gitkeep di dalamnya.
+
+FILES MODIFIED:
+- file:///h:/segFormer/docs/TASK.md (dipindahkan dari root ke docs/)
+- file:///h:/segFormer/docs/ROADMAP.md (dipindahkan dari root ke docs/)
+- file:///h:/segFormer/docs/PRD.md (dipindahkan dari root ke docs/)
+- file:///h:/segFormer/logs/task_execution.log
+
+ACTIONS PERFORMED:
+- Membuat seluruh struktur folder proyek (configs, gee, src, notebooks, data, models, outputs, logs, tests, dll.).
+- Memindahkan file dokumentasi PRD.md, ROADMAP.md, dan TASK.md dari root direktori ke dalam folder docs/.
+- Membuat file .gitkeep pada masing-masing subdirektori kosong agar struktur folder dapat terlacak oleh Git.
+- Menuliskan skema visual pohon direktori proyek ke file logs/project_tree.txt.
+- Memperbarui status TASK 1.1 di docs/TASK.md menjadi PASS dan antrean eksekusi agar TASK 1.2 menjadi NEXT.
+- Memperbarui status MILESTONE 1 di docs/ROADMAP.md menjadi IN_PROGRESS.
+
+VALIDATION EXECUTED:
+- Menjalankan script validasi python untuk memastikan tidak ada folder yang terlewat.
+- Membuka berkas logs/project_tree.txt untuk memverifikasi pohon direktori.
+
+VALIDATION RESULT:
+- PASS. Seluruh folder yang didefinisikan dalam TASK.md berhasil dibuat tanpa ada yang terlewat (MISSING: []).
+
+ERRORS OR WARNINGS:
+- Peringatan encoding (UnicodeEncodeError) terjadi saat mencoba mencetak visualisasi pohon direktori ke konsol terminal Windows. Masalah ini berhasil dimitigasi karena penulisan file logs/project_tree.txt menggunakan encoding UTF-8 berhasil diselesaikan dengan baik.
+
+USER ACTION REQUIRED:
+- Nihil.
+
+NEXT TASK:
+- TASK 1.2 — Audit Local Software
+=============================================

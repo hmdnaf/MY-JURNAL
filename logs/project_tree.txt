@@ -1,0 +1,53 @@
+SegFormer-LandCover/
+├── .gitignore
+├── aoi_sulawesi_selatan_validation.png
+├── configs
+│   └── .gitkeep
+├── data
+│   ├── interim
+│   │   └── .gitkeep
+│   ├── patches
+│   │   └── .gitkeep
+│   ├── processed
+│   │   └── .gitkeep
+│   ├── raw
+│   │   └── .gitkeep
+│   └── splits
+│       └── .gitkeep
+├── docs
+│   ├── .gitkeep
+│   ├── PRD.md
+│   ├── ROADMAP.md
+│   └── TASK.md
+├── gee
+│   └── .gitkeep
+├── logs
+│   ├── .gitkeep
+│   ├── scope_audit.md
+│   └── task_execution.log
+├── models
+│   └── .gitkeep
+├── notebooks
+│   └── .gitkeep
+├── outputs
+│   ├── figures
+│   │   └── .gitkeep
+│   ├── maps
+│   │   └── .gitkeep
+│   ├── metrics
+│   │   └── .gitkeep
+│   └── predictions
+│       └── .gitkeep
+├── src
+│   ├── data
+│   │   └── .gitkeep
+│   ├── evaluation
+│   │   └── .gitkeep
+│   ├── inference
+│   │   └── .gitkeep
+│   ├── models
+│   │   └── .gitkeep
+│   └── training
+│       └── .gitkeep
+└── tests
+    └── .gitkeep

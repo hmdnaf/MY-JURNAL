@@ -1,0 +1,266 @@
+project:
+  name: segformer-landcover-sulawesi-selatan
+  study_area: Provinsi Sulawesi Selatan
+  country: Indonesia
+  task: semantic_segmentation
+  configuration_status: pass
+
+aoi:
+  source: FAO/GAUL/2015/level1
+  administrative_level: 1
+  country_field: ADM0_NAME
+  country_value: Indonesia
+  region_field: ADM1_NAME
+  region_value: Sulawesi Selatan
+  feature_count: 1
+  validation_status: pass
+
+imagery:
+  source: COPERNICUS/S2_SR_HARMONIZED
+  cloud_source: COPERNICUS/S2_CLOUD_PROBABILITY
+  start_date: 2021-01-01
+  end_date: 2022-01-01
+
+  bands:
+    - B2
+    - B3
+    - B4
+    - B8
+
+  band_descriptions:
+    B2: Blue
+    B3: Green
+    B4: Red
+    B8: Near Infrared
+
+  native_resolution_meters: 10
+  reflectance_scale_factor: 10000
+  output_data_type: float32
+
+  scene_cloud_threshold_percent: 40
+  cloud_probability_threshold: 50
+
+  composite_method: median
+
+  edge_mask_bands:
+    - B8A
+    - B9
+
+  scl_excluded_classes:
+    - 0
+    - 1
+    - 3
+    - 8
+    - 9
+    - 10
+    - 11
+
+  resampling:
+    method: bilinear
+    application: per_source_image_before_composite
+
+  validation_status: pass
+
+label:
+  source: ESA/WorldCover/v200
+  reference_year: 2021
+  source_band: Map
+  output_band: label
+  label_role: reference_or_pseudo_label
+
+  original_values:
+    - 10
+    - 20
+    - 30
+    - 40
+    - 50
+    - 60
+    - 70
+    - 80
+    - 90
+    - 95
+    - 100
+
+  training_values:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 10
+
+  ignore_index: 255
+  resampling: nearest
+  output_data_type_in_source: uint8
+  output_data_type_in_combined_stack: float32
+  validation_status: pass
+
+classes:
+  0: Tree cover
+  1: Shrubland
+  2: Grassland
+  3: Cropland
+  4: Built-up
+  5: Bare or sparse vegetation
+  6: Snow and ice
+  7: Permanent water bodies
+  8: Herbaceous wetland
+  9: Mangroves
+  10: Moss and lichen
+
+grid:
+  crs: EPSG:3857
+  crs_name: WGS 84 / Pseudo-Mercator
+  units: meters
+
+  pixel_size_x: 10
+  pixel_size_y: -10
+
+  crs_transform:
+    - 10
+    - 0
+    - 0
+    - 0
+    - -10
+    - 0
+
+  validation_status: pass
+
+dataset_stack:
+  band_order:
+    - B2
+    - B3
+    - B4
+    - B8
+    - label
+
+  band_count: 5
+  output_data_type: float32
+  nodata: -9999
+  file_format: GeoTIFF
+  cloud_optimized: true
+  compression: LZW
+  validation_status: pass
+
+sample_region:
+  id: Makassar_Maros_Sample_003
+
+  bounds_lon_lat:
+    longitude_min: 119.50
+    latitude_min: -5.20
+    longitude_max: 119.65
+    latitude_max: -5.05
+
+  intersection_with_aoi: true
+  approximate_area_square_kilometers: 277.0855
+  unique_class_count: 8
+
+  classes_present:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 7
+    - 8
+
+  validation_status: pass
+
+sample_export:
+  task_id: SULSEL_DATASET_SAMPLE_003
+  filename: SULSEL_DATASET_SAMPLE_003.tif
+  drive_folder: SegFormer_LandCover_Sulsel
+  local_path: data/raw/sample/SULSEL_DATASET_SAMPLE_003.tif
+
+  width_pixels: 1671
+  height_pixels: 1677
+  total_pixel_count: 2802267
+
+  pixel_size_x: 10
+  pixel_size_y: -10
+
+  band_count: 5
+  output_data_type: float32
+  nodata: -9999
+  nodata_pixel_count: 0
+
+  label_min: 0
+  label_max: 8
+
+  label_unique_values:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 7
+    - 8
+
+  export_status: completed
+  qgis_audit_status: pass
+
+qgis_audit:
+  project_file: qgis/dataset_sample_audit.qgz
+
+  file_opened: pass
+  crs: pass
+  pixel_size: pass
+  dimensions: pass
+  band_count: pass
+  band_order: pass
+  data_type: pass
+  nodata: pass
+  rgb_spatial_detail: pass
+  integer_label_values: pass
+  fractional_label_values_absent: pass
+  image_label_alignment: pass
+  evidence_complete: pass
+
+  final_status: pass
+
+patches:
+  patch_size_pixels: 256
+  stride_pixels: 256
+  approximate_ground_size_meters: 2560
+  overlap: 0
+  remove_all_nodata: true
+  remove_single_class: false
+  status: not_started
+
+split:
+  method: spatial
+  train_ratio: 0.70
+  validation_ratio: 0.15
+  test_ratio: 0.15
+  status: not_started
+
+export_grid:
+  script: gee/05_Export_Grid.js
+  crs: "EPSG:3857"
+  tile_size_meters: 50000
+  tile_width_pixels: 5000
+  tile_height_pixels: 5000
+  tile_size_status: provisional
+  rows: 13
+  columns: 11
+  candidate_tile_count: 143
+  retained_tile_count: 55
+  tile_id_pattern: "SULSEL_R000_C000"
+  minimum_aoi_coverage_ratio: 0.000046
+  maximum_aoi_coverage_ratio: 1.0000000000000007
+  visual_validation_status: pass
+  no_export_task_status: pass
+  final_status: pass
+  full_export_status: not_started
+
+full_export:
+  grid_creation_status: pass
+  export_status: not_started
+  audit_status: not_started
