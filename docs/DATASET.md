@@ -92,11 +92,12 @@ described as field-observed ground truth.
 - CRS name: WGS 84 / Pseudo-Mercator
 - Units: meters
 - Pixel size: 10 × 10 meters
-- Affine transform: `[10, 0, 0, 0, -10, 0]`
+- Affine transform pattern: `[10, 0, x_origin, 0, -10, y_origin]`
 - Grid configuration status: PASS
 
 The image bands and label use the same export region, CRS, affine
-transform, dimensions, and pixel grid.
+transform, dimensions, and pixel grid. Accepted rasters may have fractional
+projected origins; origin `0,0` is not required.
 
 ## 8. Dataset Stack
 
@@ -255,14 +256,29 @@ Dataset-stack configuration: PASS
 Sample export: PASS  
 QGIS sample audit: PASS  
 Evidence collection: PASS  
+- Three-pilot V2 export: PASS
+- Three-pilot V2 final validation: PASS
+- Three-pilot V2 automated raster audit: PASS
+- Low-coverage `SULSEL_R005_C000` V2 manual QGIS audit: PASS
+- Dedicated `SULSEL_R009_C004` manual QGIS screenshots: not recorded
+- M5 Export Grid and Pilot Validation: PASS
+- TASK 6.1 automated raster auditor: PASS
+- M6 pre-production export preparation: PASS
+- M6 Full Dataset Export and Raster Audit: IN_PROGRESS
+- Production export manifest: 5 AUDITED_PASS; 50 EXPECTED_PENDING
+- Batch_04 production export: COMPLETED
+- Batch_04 local raster audit: PASS
+- Batch_04 Gate 4: PASS
+- Passed production tiles: 5 of 55
+- Remaining production tiles: 50
 
-**DATASET SAMPLE CONFIGURATION STATUS: PASS**
+**M5 DATASET AND PILOT VALIDATION STATUS: PASS**
 
 ## 16. Export Grid Audit (TASK 5.2)
 
 - Script path: `gee/05_Export_Grid.js`
 - CRS: `EPSG:3857`
-- Provisional tile size: 50,000 meters (50 km × 50 km)
+- Approved production tile size: 50,000 meters (50 km × 50 km)
 - Tile pixel dimensions: 5,000 × 5,000 pixels at 10-meter resolution
 - Number of rows: 13
 - Number of columns: 11
@@ -287,7 +303,110 @@ Evidence collection: PASS
 - `grid_console_grid_diagnostics.png`
 
 > [!WARNING]
-> - **Provisional Tile Size:** `50,000 meters` (`50 km × 50 km`) is a provisional candidate size for visualization and technical testing only; it requires manual validation before production export.
-> - **Full Tiled Export:** Full tiled export (`TASK 5.4`) has **NOT STARTED** and is not authorized to run.
+> - **Production Tile Size:** `50,000 meters` (`50 km × 50 km`) is approved for production after sample export validation, final validation and automated raster audits for all three V2 pilots, and dedicated manual QGIS label/alignment evidence for `SULSEL_R005_C000`.
+> - **Full Tiled Export:** Full 55-tile export (`TASK 5.4`) is `IN_PROGRESS`; batch_04 has passed local raster audit, 5 of 55 production tiles have passed, and 50 production tiles remain. No next batch is authorized to run automatically.
 
-The next milestone is full tiled export (`TASK 5.4`) for Provinsi Sulawesi Selatan.
+The current milestone is M6 full dataset export and raster audit for Provinsi
+Sulawesi Selatan. Batch_04 has passed the local raster gate, but M6 remains
+`IN_PROGRESS` until all production tiles complete and pass audit.
+
+## 17. Final Three-Pilot V2 Validation (M5 Closure)
+
+All three accepted V2 pilot rasters exist locally and have final pilot audit
+status `PASS`:
+
+| Role | Tile ID | Accepted local file | Final V2 audit |
+|---|---|---|---|
+| Urban/coastal | `SULSEL_R005_C004` | `data/raw/pilot/SULSEL_2021_SULSEL_R005_C004_S2WC_V2.tif` | PASS |
+| Vegetated/mountainous | `SULSEL_R009_C004` | `data/raw/pilot/SULSEL_2021_SULSEL_R009_C004_S2WC_V2.tif` | PASS |
+| Low-coverage coastal/island | `SULSEL_R005_C000` | `data/raw/pilot/SULSEL_2021_SULSEL_R005_C000_S2WC_V2.tif` | PASS |
+
+All three V2 pilots passed automated raster audit. Dedicated manual QGIS
+evidence including label and image-label alignment exists for
+`SULSEL_R005_C000`. Dedicated manual QGIS screenshots are not recorded for
+`SULSEL_R009_C004` and are not claimed here.
+
+### 17.1 Low-Coverage Pilot `SULSEL_R005_C000` V2
+
+Verified manual QGIS properties:
+
+- Dimensions: `5000 × 5000` pixels
+- Band count: `5`
+- Band order: `B2`, `B3`, `B4`, `B8`, `label`
+- CRS: `EPSG:3857`
+- Pixel size: `10 × 10` meters
+- Raster type: `Float32`
+- NoData: `-9999`
+- Compression: `LZW`
+- Label minimum: `0`
+- Label maximum: `9`
+- Observed labels: `0, 1, 2, 4, 5, 7, 8, 9`
+- RGB `B4/B3/B2` visualization: PASS
+- Categorical label visualization: PASS
+- Identify Features confirms exact integer Band 5 label: PASS
+- Image-label visual alignment: PASS
+
+Verified evidence under `docs/evidence/pilot_export_precheck/`:
+
+- `pilot_low_coverage_raster_information_1.png`
+- `pilot_low_coverage_raster_information_2.png`
+- `pilot_low_coverage_raster_information_3.png`
+- `pilot_low_coverage_rgb_visualization.png`
+- `pilot_low_coverage_label_unique_values.png`
+- `pilot_low_coverage_label_visualization.png`
+- `pilot_low_coverage_identify_label.png`
+- `pilot_low_coverage_label_alignment.png`
+
+This pilot closure validates the M5 pilot gate only. It is not evidence that the
+55-tile full export, production manifest, or automated all-raster audit is
+complete.
+
+## 18. M6 Pre-Production Export Preparation
+
+Prepared artifacts:
+
+- Automated raster auditor: `src/data/audit_raster.py` (`PASS`)
+- Unit tests: `tests/test_audit_raster.py` (`PASS`)
+- Safe production export script: `gee/07_Full_Export.js`
+- Expected production manifest: `data/raw/export_manifest.csv`
+
+The manifest contains 55 expected production rows with initial status
+`EXPECTED_PENDING`. The approved status values are:
+
+- `EXPECTED_PENDING`: expected production raster has not yet completed the production export + local-audit lifecycle.
+- `EXPORTED_PENDING_AUDIT`: production output exists, but local production audit has not yet passed.
+- `AUDITED_PASS`: production output exists locally and automated production raster audit passed.
+- `AUDITED_FAIL`: automated production raster audit failed.
+- `QUARANTINED`: failed production raster has been deliberately quarantined and must not proceed to patch extraction.
+
+It records deterministic tile IDs, row/column values, expected filenames, batch
+IDs, dimensions, CRS, pixel size, band count, band order, dtype, NoData, and
+current lifecycle status. The tile set is derived from the same FAO GAUL 2015
+Level 1 source used by the GEE scripts and cross-checked against accepted V2
+pilot raster grid origins and coverage ratios; no boundary dataset copy is
+stored in the repository.
+
+Production raster contract:
+
+- Combined single GeoTIFF stack
+- Band order: `B2`, `B3`, `B4`, `B8`, `label`
+- Tile size status: `approved_for_production`
+- Dimensions: `5000 × 5000` pixels per production tile
+- CRS: `EPSG:3857`
+- Pixel size: `10 × 10` meters
+- Dtype: `Float32`
+- NoData: `-9999`
+
+Production all-NoData policy:
+
+- Low valid coverage alone does not fail a tile.
+- An all-NoData production raster must be quarantined/reviewed and must not
+  proceed to patch creation.
+- Production audit should invoke the auditor with `--fail-on-all-nodata`.
+
+Batch_04 production export is `COMPLETED`, batch_04 local raster audit is
+`PASS`, the five batch_04 manifest rows are `AUDITED_PASS`, and Batch_04 Gate 4
+is `PASS`; see `logs/batch_04_raster_audit.md`. M6 remains `IN_PROGRESS` until
+the remaining 50 production tiles complete and pass audit, downloaded files
+match the manifest, all raw rasters are audited, and invalid tiles are
+quarantined.

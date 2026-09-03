@@ -7,7 +7,7 @@
 **Primary Reference:** `docs/PRD.md`  
 **Execution Mode:** Sequential task execution with validation gates  
 **Primary AI Agent:** Antigravity IDE  
-**Current Project Stage:** AOI preparation in Google Earth Engine  
+**Current Project Stage:** M5 closed (`PASS`); M6 full dataset export and raster audit is `IN_PROGRESS`; TASK 6.1 automated raster auditor is `PASS`; batch_04 production export and local raster audit are `PASS`; 5 of 55 production tiles have passed the local raster gate; 50 production tiles remain
 
 ---
 
@@ -54,6 +54,7 @@ These rules apply to every task.
 | Status | Meaning |
 |---|---|
 | `TODO` | Not started |
+| `NEXT` | First eligible work item; not started yet |
 | `IN_PROGRESS` | Currently being executed |
 | `HUMAN_ACTION_REQUIRED` | Requires user interaction outside Antigravity IDE |
 | `BLOCKED` | Cannot continue due to unmet dependency |
@@ -266,7 +267,7 @@ Return PASS only if the exact required structure exists.
 
 ## TASK 1.2 — Audit Local Software
 
-**Status:** `TODO`
+**Status:** `PASS`
 
 ### Objective
 Record the local development environment without installing heavy GPU packages unnecessarily.
@@ -303,7 +304,7 @@ Return PASS if all relevant versions and limitations are recorded.
 
 ## TASK 1.3 — Create Python Environment Specification
 
-**Status:** `TODO`
+**Status:** `PASS`
 
 ### Objective
 Define dependencies reproducibly.
@@ -349,7 +350,7 @@ Return PASS only if the dependency specification is coherent.
 
 ## TASK 2.1 — Create AOI Script for South Sulawesi
 
-**Status:** `NEXT`
+**Status:** `PASS`
 
 ### Objective
 Create and validate the official AOI for Provinsi Sulawesi Selatan.
@@ -459,7 +460,7 @@ inspect the correct ADM1_NAME value.
 
 ## TASK 2.2 — Export or Save AOI Reference
 
-**Status:** `TODO`
+**Status:** `PASS`
 
 ### Objective
 Make the validated AOI reusable.
@@ -493,7 +494,7 @@ from another script. Return PASS or FAIL.
 
 ## TASK 3.1 — Define Data Configuration
 
-**Status:** `TODO`
+**Status:** `PASS`
 
 ### Objective
 Create central configuration for date range, cloud threshold, bands, scale, and CRS.
@@ -540,7 +541,7 @@ with assumptions.
 
 ## TASK 3.2 — Load and Inspect Sentinel-2 Collection
 
-**Status:** `TODO`
+**Status:** `PASS`
 
 ### Objective
 Load Sentinel-2 SR Harmonized and inspect collection availability.
@@ -579,7 +580,7 @@ starts a large export at this stage.
 
 ## TASK 3.3 — Implement Pixel-Level Cloud Masking
 
-**Status:** `TODO`
+**Status:** `PASS`
 
 ### Objective
 Mask clouds and cloud shadows at pixel level.
@@ -615,7 +616,7 @@ code-level validation.
 
 ## TASK 3.4 — Create Median Composite
 
-**Status:** `TODO`
+**Status:** `PASS`
 
 ### Objective
 Create a representative cloud-reduced composite.
@@ -647,7 +648,7 @@ Confirm AOI boundary, band count, and visual plausibility. Return PASS or FAIL.
 
 ## TASK 4.1 — Load and Inspect ESA WorldCover
 
-**Status:** `TODO`
+**Status:** `PASS`
 
 ### Objective
 Load the reference land-cover label.
@@ -685,7 +686,7 @@ only documented WorldCover values. Return FAIL if bilinear interpolation is used
 
 ## TASK 4.2 — Define Label Remapping
 
-**Status:** `TODO`
+**Status:** `PASS`
 
 ### Objective
 Map original WorldCover codes to contiguous training indices.
@@ -709,11 +710,11 @@ is explicit, and a reverse mapping exists for map legends. Return PASS or FAIL.
 
 ---
 
-# PHASE 5 — Grid Alignment and Sample Export
+# PHASE 5 — Grid Alignment, Sample Export, and Pilot Validation
 
 ## TASK 5.1 — Decide Export Projection and Grid
 
-**Status:** `TODO`
+**Status:** `PASS`
 
 ### Objective
 Define a meter-based raster grid shared by image and label.
@@ -745,13 +746,13 @@ neighbor treatment for categorical labels. Return PASS or FAIL with technical re
 
 ## TASK 5.2 — Create Export Grid
 
-**Status:** `TODO`
+**Status:** `PASS`
 
 ### Objective
 Divide South Sulawesi into manageable export tiles.
 
 ### Output
-- `gee/04_Export_Grid.js`;
+- `gee/05_Export_Grid.js`;
 - grid layer with tile IDs;
 - tile metadata export if needed.
 
@@ -778,7 +779,7 @@ manageable tile dimensions. Return PASS or FAIL.
 
 ## TASK 5.3 — Export One Sample Image-Label Pair
 
-**Status:** `TODO`
+**Status:** `PASS`
 
 ### Objective
 Test the full export configuration before province-scale export.
@@ -820,9 +821,35 @@ Do not start the full export if this task fails.
 
 ---
 
-## TASK 5.4 — Run Full Tiled Export
+## M5 Closure Record — Three-Pilot V2 Validation
+
+**Status:** `PASS`
+
+The following accepted V2 pilot rasters exist locally and passed final
+validation and automated raster audit:
+
+- `data/raw/pilot/SULSEL_2021_SULSEL_R005_C004_S2WC_V2.tif`
+  (`SULSEL_R005_C004`, urban/coastal);
+- `data/raw/pilot/SULSEL_2021_SULSEL_R009_C004_S2WC_V2.tif`
+  (`SULSEL_R009_C004`, vegetated/mountainous);
+- `data/raw/pilot/SULSEL_2021_SULSEL_R005_C000_S2WC_V2.tif`
+  (`SULSEL_R005_C000`, low-coverage coastal/island).
+
+The low-coverage `R005_C000` V2 raster passed manual checks for dimensions,
+five-band order, CRS, 10-meter pixels, Float32 type, NoData, LZW compression,
+integer categorical labels, RGB display, categorical display, Identify Features,
+and image-label alignment. Dedicated manual QGIS screenshots are not recorded
+for `R009_C004` and are not claimed. This closes M5 only; it does not close or
+authorize the full 55-tile export.
+
+---
+
+## TASK 5.4 — Run Full Tiled Export (M6 execution; legacy task number)
 
 **Status:** `TODO`
+
+**Pre-production preparation:** `PASS`  
+**Execution status:** `IN_PROGRESS`; batch_04 production export completed and passed local raster audit; 50 production tiles remain
 
 ### Objective
 Export all approved tiles after sample validation.
@@ -837,12 +864,13 @@ The user starts and monitors GEE Tasks.
 - later compare completed files against manifest.
 
 ### Output
-- raw Sentinel-2 tiles;
-- raw WorldCover tiles;
-- `data/raw/export_manifest.csv`.
+- safe production GEE script: `gee/07_Full_Export.js`;
+- expected production manifest: `data/raw/export_manifest.csv`;
+- after separate authorized execution, one combined five-band GeoTIFF stack per tile.
 
 ### Acceptance Criteria
-- every image tile has one label tile;
+- every expected production tile has one combined stack:
+  `B2`, `B3`, `B4`, `B8`, `label`;
 - failed exports are listed;
 - no duplicated tile IDs;
 - manifest matches downloaded files.
@@ -850,20 +878,34 @@ The user starts and monitors GEE Tasks.
 ### Validation Prompt
 ```text
 Compare the expected export manifest with downloaded files.
-Report missing image tiles, missing label tiles, duplicate IDs, zero-byte files,
-and unexpected names. Return PASS only when every expected pair is complete.
+Report missing stacks, duplicate IDs, zero-byte files, and unexpected names.
+Return PASS only when every expected combined stack is complete.
 ```
+
+### Batch_04 Bookkeeping Record
+
+- GEE preflight: PASS
+- GEE production tasks: 5/5 COMPLETED
+- Google Drive completeness: PASS
+- Local download completeness: PASS
+- Automated local raster audit: PASS
+- Passed production tiles: 5 of 55
+- Remaining production tiles: 50
+- Batch audit record: `logs/batch_04_raster_audit.md`
+
+M6 remains `IN_PROGRESS`; this record does not mark TASK 5.4 or TASK 6.2 as
+`PASS` for the full 55-tile production dataset.
 
 ---
 
 # PHASE 6 — Local Raster Audit
 
-## TASK 6.1 — Implement Raster Pair Auditor
+## TASK 6.1 — Implement Raster Auditor
 
-**Status:** `TODO`
+**Status:** `PASS`
 
 ### Objective
-Build a reusable script that verifies exported image-label pairs.
+Build a reusable script that verifies the accepted combined five-band raster stack.
 
 ### Output
 - `src/data/audit_raster.py`
@@ -880,25 +922,25 @@ Build a reusable script that verifies exported image-label pairs.
 - data type;
 - NoData;
 - unique label values;
-- image-label alignment.
+- internal image-label grid consistency.
 
 ### Acceptance Criteria
-- script exits `0` for valid pairs;
-- script exits non-zero for invalid pairs;
+- script exits `0` for valid combined stack rasters;
+- script exits non-zero for invalid stack rasters;
 - produces a human-readable report.
 
 ### Validation Prompt
 ```text
-Review and execute audit_raster.py against one valid pair and one deliberately
-invalid test fixture. Return PASS only if it accepts the valid pair and rejects
-the invalid pair with an informative message.
+Review and execute audit_raster.py against one valid combined stack and one
+deliberately invalid test fixture. Return PASS only if it accepts the valid
+stack and rejects the invalid stack with an informative message.
 ```
 
 ---
 
 ## TASK 6.2 — Audit All Raw Tiles
 
-**Status:** `TODO`
+**Status:** `BLOCKED`
 
 ### Objective
 Validate all exported data before patch extraction.
@@ -909,14 +951,15 @@ Validate all exported data before patch extraction.
 
 ### Acceptance Criteria
 - all pairs checked;
-- invalid pairs quarantined;
-- no invalid pair proceeds to patch creation.
+- invalid rasters quarantined;
+- no invalid raster proceeds to patch creation.
 
 ### Validation Prompt
 ```text
 Review the complete raw-raster audit.
-Return PASS only if every approved tile pair is readable, aligned, and contains
-valid categorical labels. List quarantined tiles separately.
+Return PASS only if every approved combined tile raster is readable, internally
+consistent, and contains valid categorical labels. List quarantined tiles
+separately.
 ```
 
 ---
@@ -1411,16 +1454,19 @@ The project is complete only when:
 
 # 4. Current Execution Queue
 
-| Order | Task | Current Status |
+| Order | Milestone / Task | Current Status |
 |---:|---|---|
-| 1 | TASK 0.1 — Verify Project Scope | PASS |
-| 2 | TASK 0.2 — Create Safe Ignore Rules | PASS |
-| 3 | TASK 1.1 — Create Project Folder Structure | PASS |
-| 4 | TASK 1.2 — Audit Local Software | NEXT |
-| 5 | TASK 1.3 — Create Python Environment Specification | TODO |
-| 6 | TASK 2.1 — Create AOI Script for South Sulawesi | BLOCKED |
-| 7 | TASK 2.2 — Export or Save AOI Reference | TODO |
-| 8 | TASK 3.1 onward | BLOCKED until AOI is PASS |
+| 1 | M0 — Documentation Alignment | PASS |
+| 2 | M1 — Local Environment and Repository Setup | PASS |
+| 3 | M2 — AOI South Sulawesi | PASS |
+| 4 | M3 — Sentinel-2 Sample Pipeline | PASS |
+| 5 | M4 — ESA WorldCover Label Pipeline | PASS |
+| 6 | M5 — Export Grid and Pilot Validation | PASS |
+| 7 | TASK 6.1 — Implement Raster Auditor | PASS |
+| 8 | M6 pre-production export preparation | PASS |
+| 9 | TASK 5.4 — Run Full Tiled Export | IN_PROGRESS; batch_04 completed and local raster audit PASS; 50 production tiles remain |
+| 10 | TASK 6.2 — Audit All Raw Tiles | BLOCKED until full export files exist |
+| 11 | M7-M12 | BLOCKED by sequential dependency gates |
 
 ---
 

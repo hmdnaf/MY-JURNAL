@@ -741,21 +741,34 @@ Proyek dinyatakan selesai jika:
 
 ## 25. Status Saat Ini
 
-| Tahap | Status |
-|---|---|
-| Registrasi Google Earth Engine | PASS |
-| Google Cloud Project | PASS |
-| Earth Engine API | PASS |
-| Earth Engine Code Editor | PASS |
-| Struktur repository lokal | BELUM DIVALIDASI |
-| AOI Provinsi Sulawesi Selatan | NEXT TASK |
-| Akuisisi Sentinel-2 | BELUM DIMULAI |
-| ESA WorldCover | BELUM DIMULAI |
-| Ekspor GeoTIFF | BELUM DIMULAI |
-| Dataset patch | BELUM DIMULAI |
-| Training SegFormer | BELUM DIMULAI |
-| Evaluasi | BELUM DIMULAI |
-| Inferensi dan peta | BELUM DIMULAI |
+Status berikut adalah status praktis terverifikasi selama M6 setelah batch_04
+production export dan local raster audit dinyatakan `PASS`.
+
+| Milestone | Tahap | Status |
+|---|---|---|
+| M0 | Documentation Alignment | PASS |
+| M1 | Local Environment and Repository Setup | PASS |
+| M2 | AOI Provinsi Sulawesi Selatan | PASS |
+| M3 | Sentinel-2 Sample Pipeline | PASS |
+| M4 | ESA WorldCover Label Pipeline | PASS |
+| M5 | Export Grid and Pilot Validation | PASS |
+| M6 | Full Dataset Export and Raster Audit | IN_PROGRESS |
+| M7 | Patch Dataset and Spatial Split | BLOCKED oleh M6 |
+| M8 | SegFormer-B0 Preparation | BLOCKED oleh M7 |
+| M9 | Training | BLOCKED oleh M8 |
+| M10 | Evaluation | BLOCKED oleh M9 |
+| M11 | Inference and Map Reconstruction | BLOCKED oleh M10 |
+| M12 | Reproducibility and Final Audit | BLOCKED oleh M11 |
+
+Tiga raster pilot V2 telah diekspor, lolos final validation, dan lolos
+automated raster audit. Bukti manual QGIS khusus yang mencakup label dan
+image-label alignment tersedia untuk `SULSEL_R005_C000`; screenshot manual
+QGIS khusus `SULSEL_R009_C004` tidak diklaim.
+Automated raster auditor sudah tersedia dan tervalidasi sebagai awal M6. Batch_04
+production export sudah selesai, 5/5 GeoTIFF batch_04 sudah tersedia lokal, dan
+5/5 raster batch_04 sudah lolos automated local raster audit. M6 tetap
+`IN_PROGRESS`: 5 dari 55 production tiles sudah melewati local raster gate, dan
+50 production tiles masih tersisa.
 
 ---
 
@@ -770,4 +783,7 @@ Proyek dinyatakan selesai jika:
 7. Ekspor raster dilakukan secara bertile jika satu ekspor provinsi terlalu besar.
 8. NDVI, NDWI, dan NDBI merupakan eksperimen opsional.
 9. Tidak ada observasi langsung dalam ruang lingkup proyek.
-10. Tahap berikutnya adalah pembuatan dan validasi AOI Sulawesi Selatan.
+10. Tahap aktif adalah M6: automated raster auditor sudah `PASS`; batch_04
+    production export dan local raster audit sudah `PASS`; batch berikutnya
+    hanya boleh dijalankan setelah otorisasi pengguna dan tetap harus diikuti
+    audit raster produksi sebelum M7.

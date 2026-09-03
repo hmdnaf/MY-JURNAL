@@ -1,13 +1,29 @@
 # Pilot Tile Selection
 
 ## 1. Document Status
+
+### Current M5 Closure Status
+
 ```text
 PILOT TILE SELECTION STATUS: PASS
 
-PILOT EXPORT AUTHORIZATION STATUS: NOT APPROVED
+THREE-PILOT V2 EXPORT STATUS: COMPLETED
 
-TASK 5.4 EXECUTION STATUS: NOT STARTED
+FINAL THREE-PILOT V2 AUDIT STATUS: PASS
+
+FULL TILED EXPORT STATUS: NOT STARTED
+
+M5 STATUS: PASS
+
+M6 STATUS: IN_PROGRESS
 ```
+
+### Historical Selection Snapshot
+
+At the time this selection record was first approved, pilot export authorization
+was `NOT APPROVED`, the pilot export script had not been created, and no pilot
+GeoTIFF had been exported. Those statements are retained below only as historical
+selection-stage context; they are not the current project status.
 
 ## 2. Selection Purpose
 The three representative tiles documented in this specification were selected to test and validate:
@@ -47,17 +63,47 @@ For every selected pilot tile (`SULSEL_R005_C004`, `SULSEL_R009_C004`, `SULSEL_R
 - **Tile ID unique among the three selected tiles:** `PASS` (all 3 tile IDs are distinct).
 
 ## 5. Evidence
+
+### 5.1 Historical Selection Evidence
+
 The manual Google Earth Engine pilot-tile selection is verified by three screenshot artifacts located in `docs/evidence/pilot_selection/`:
 - [docs/evidence/pilot_selection/pilot_tile_urban_coastal.png](file:///h:/segFormer/docs/evidence/pilot_selection/pilot_tile_urban_coastal.png) (36,619 bytes)
 - [docs/evidence/pilot_selection/pilot_tile_vegetated_mountainous.png](file:///h:/segFormer/docs/evidence/pilot_selection/pilot_tile_vegetated_mountainous.png) (33,536 bytes)
 - [docs/evidence/pilot_selection/pilot_tile_low_coverage_island.png](file:///h:/segFormer/docs/evidence/pilot_selection/pilot_tile_low_coverage_island.png) (25,650 bytes)
+
+### 5.2 Completed Export and Final V2 Audit State
+
+Accepted local V2 rasters:
+
+- `data/raw/pilot/SULSEL_2021_SULSEL_R005_C004_S2WC_V2.tif`
+- `data/raw/pilot/SULSEL_2021_SULSEL_R009_C004_S2WC_V2.tif`
+- `data/raw/pilot/SULSEL_2021_SULSEL_R005_C000_S2WC_V2.tif`
+
+Final status for the urban/coastal, vegetated/mountainous, and low-coverage
+coastal/island V2 pilots is `PASS`.
+
+The completed low-coverage `R005_C000` manual QGIS audit is evidenced by these
+existing files under `docs/evidence/pilot_export_precheck/`:
+
+- `pilot_low_coverage_raster_information_1.png`
+- `pilot_low_coverage_raster_information_2.png`
+- `pilot_low_coverage_raster_information_3.png`
+- `pilot_low_coverage_rgb_visualization.png`
+- `pilot_low_coverage_label_unique_values.png`
+- `pilot_low_coverage_label_visualization.png`
+- `pilot_low_coverage_identify_label.png`
+- `pilot_low_coverage_label_alignment.png`
 
 ## 6. Pilot Role Summary
 - `SULSEL_R005_C004` is the urban/coastal pilot tile;
 - `SULSEL_R009_C004` is the vegetated/mountainous pilot tile;
 - `SULSEL_R005_C000` is the low-coverage coastal/island pilot tile.
 
-## 7. Safety Status
+## 7. Historical Safety Status at Selection Time
+
+The following snapshot describes the earlier selection-only task and is retained
+for audit history. It is not the current status:
+
 - **Export script created:** NO
 - **Export.image.toDrive added:** NO
 - **GEE export tasks submitted:** NO
@@ -65,16 +111,29 @@ The manual Google Earth Engine pilot-tile selection is verified by three screens
 - **Full export started:** NO
 - **TASK 5.4 started:** NO
 
-## 8. Next Controlled Step
-The next controlled step is to create a pilot-only GEE export script for exactly these three tile IDs (`SULSEL_R005_C004`, `SULSEL_R009_C004`, `SULSEL_R005_C000`).
-Creating the pilot script still requires separate user approval.
-Do not create the script during this task.
+## 8. Historical Next Step and Current Next Step
+
+Historical next step (now completed): create a pilot-only GEE export script for
+exactly `SULSEL_R005_C004`, `SULSEL_R009_C004`, and `SULSEL_R005_C000`, then
+export and audit their corrected V2 rasters.
+
+Current next step: continue M6 by running the full 55-tile GEE export only after
+separate user action and authorization, then audit every downloaded production
+raster.
 
 ## 9. Final Result
 ```text
 PILOT TILE SELECTION STATUS: PASS
 
-PILOT EXPORT STATUS: NOT STARTED
+THREE-PILOT V2 EXPORT STATUS: COMPLETED
+
+FINAL THREE-PILOT V2 AUDIT STATUS: PASS
+
+LOW-COVERAGE R005_C000 V2 MANUAL QGIS AUDIT: PASS
 
 FULL TILED EXPORT STATUS: NOT STARTED
+
+M5 STATUS: PASS
+
+M6 STATUS: IN_PROGRESS
 ```

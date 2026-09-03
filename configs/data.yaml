@@ -121,13 +121,16 @@ grid:
   pixel_size_x: 10
   pixel_size_y: -10
 
+  # Affine transform pattern only.
+  # Origin terms are tile-specific projected coordinates and may be fractional.
+  # Do not validate raw rasters by requiring origin 0,0.
   crs_transform:
     - 10
     - 0
-    - 0
+    - null
     - 0
     - -10
-    - 0
+    - null
 
   validation_status: pass
 
@@ -247,7 +250,7 @@ export_grid:
   tile_size_meters: 50000
   tile_width_pixels: 5000
   tile_height_pixels: 5000
-  tile_size_status: provisional
+  tile_size_status: approved_for_production
   rows: 13
   columns: 11
   candidate_tile_count: 143

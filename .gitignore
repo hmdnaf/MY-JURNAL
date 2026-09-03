@@ -5,7 +5,8 @@
 # ============================================================
 
 # Geospatial and Training Data
-data/raw/
+data/raw/*
+!data/raw/export_manifest.csv
 data/interim/
 data/processed/
 data/patches/

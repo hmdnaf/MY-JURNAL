@@ -87,7 +87,7 @@ M3  Sentinel-2 Sample Pipeline
         ↓
 M4  ESA WorldCover Label Pipeline
         ↓
-M5  Export Grid and Sample Export
+M5  Export Grid and Pilot Validation
         ↓
 M6  Full Dataset Export and Audit
         ↓
@@ -149,7 +149,7 @@ MILESTONE 1.
 
 ## MILESTONE 1 — Local Environment and Repository Setup
 
-**Status:** `IN_PROGRESS`
+**Status:** `PASS`
 
 ### Goal
 
@@ -190,7 +190,7 @@ MILESTONE 2.
 
 ## MILESTONE 2 — AOI Provinsi Sulawesi Selatan
 
-**Status:** `NEXT`
+**Status:** `PASS`
 
 ### Goal
 
@@ -238,7 +238,7 @@ MILESTONE 3.
 
 ## MILESTONE 3 — Sentinel-2 Sample Pipeline
 
-**Status:** `BLOCKED`
+**Status:** `PASS`
 
 ### Goal
 
@@ -288,7 +288,7 @@ MILESTONE 4.
 
 ## MILESTONE 4 — ESA WorldCover Label Pipeline
 
-**Status:** `BLOCKED`
+**Status:** `PASS`
 
 ### Goal
 
@@ -329,13 +329,13 @@ MILESTONE 5.
 
 ---
 
-## MILESTONE 5 — Export Grid and Sample Export
+## MILESTONE 5 — Export Grid and Pilot Validation
 
-**Status:** `BLOCKED`
+**Status:** `PASS`
 
 ### Goal
 
-Menentukan grid raster dan menguji satu pasangan ekspor citra-label.
+Menentukan grid raster, menguji sample export, dan memvalidasi tiga raster pilot V2.
 
 ### Main Activities
 
@@ -349,14 +349,21 @@ Menentukan grid raster dan menguji satu pasangan ekspor citra-label.
 - mengekspor satu GeoTIFF WorldCover;
 - membuka hasil di QGIS;
 - mengaudit alignment.
+- memilih tiga tile pilot representatif;
+- mengekspor ulang pilot V2 dengan dimensi tepat `5000 × 5000`;
+- menjalankan automated raster audit untuk ketiga pilot V2;
+- melengkapi bukti manual QGIS label/alignment untuk pilot low-coverage `SULSEL_R005_C000`.
 
 ### Required Outputs
 
-- `gee/04_Export_Grid.js`;
+- `gee/05_Export_Grid.js`;
 - satu sample image GeoTIFF;
 - satu sample label GeoTIFF;
 - konfigurasi grid final;
 - laporan audit sample.
+- `gee/06_Pilot_Export.js`;
+- tiga raster pilot V2 yang diterima;
+- evidence automated audit ketiga pilot dan manual QGIS low-coverage pilot.
 
 ### Exit Criteria
 
@@ -369,6 +376,9 @@ Menentukan grid raster dan menguji satu pasangan ekspor citra-label.
 - label tetap kategorikal;
 - kedua file dapat dibuka;
 - sample export `PASS`.
+- ketiga pilot V2 berukuran `5000 × 5000` dengan lima band yang benar;
+- final validation dan automated raster audit ketiga pilot V2 `PASS`;
+- manual QGIS label/alignment `SULSEL_R005_C000` `PASS`; screenshot manual khusus `SULSEL_R009_C004` tidak diklaim.
 
 ### Dependency
 
@@ -386,14 +396,18 @@ MILESTONE 6.
 
 ## MILESTONE 6 — Full Dataset Export and Raster Audit
 
-**Status:** `BLOCKED`
+**Status:** `IN_PROGRESS`
 
 ### Goal
 
-Mengekspor semua tile yang disetujui dan memvalidasi seluruh pasangan citra-label.
+Mengekspor semua tile yang disetujui sebagai combined five-band GeoTIFF stack
+dan memvalidasi seluruh raster produksi.
 
 ### Main Activities
 
+- menyelesaikan TASK 6.1 automated raster auditor;
+- menyiapkan script produksi aman-by-default;
+- menyiapkan manifest expected/pending;
 - menghasilkan export manifest;
 - menjalankan ekspor bertile di GEE;
 - memonitor task GEE;
@@ -401,24 +415,24 @@ Mengekspor semua tile yang disetujui dan memvalidasi seluruh pasangan citra-labe
 - mencocokkan file dengan manifest;
 - memeriksa file hilang;
 - memeriksa file duplikat;
-- mengaudit semua pasangan raster;
+- mengaudit semua raster produksi;
 - mengarantina file invalid.
 
 ### Required Outputs
 
-- Sentinel-2 tiles;
-- WorldCover tiles;
-- `data/raw/export_manifest.csv`;
 - `src/data/audit_raster.py`;
+- `gee/07_Full_Export.js`;
+- `data/raw/export_manifest.csv`;
+- production GeoTIFF tiles setelah export terotorisasi;
 - `logs/raw_raster_audit.csv`;
 - `logs/raw_raster_audit_summary.md`.
 
 ### Exit Criteria
 
-- semua tile image memiliki satu pasangan label;
+- semua expected production tile memiliki satu combined stack;
 - tidak ada file corrupt;
 - tidak ada tile ID ganda;
-- semua pasangan sejajar;
+- semua raster stack konsisten secara internal;
 - tile invalid tidak diteruskan ke patch builder.
 
 ### Dependency
@@ -810,12 +824,12 @@ Step 20 Complete final audit
 | Milestone | Status | Notes |
 |---|---|---|
 | M0 Documentation Alignment | PASS | scope audit and gitignore validated |
-| M1 Local Environment | IN_PROGRESS | repository layout PASS; environment audit and requirements pending |
-| M2 AOI South Sulawesi | BLOCKED | waiting for M1 |
-| M3 Sentinel-2 Pipeline | BLOCKED | waiting for AOI |
-| M4 WorldCover Pipeline | BLOCKED | waiting for AOI |
-| M5 Sample Export | BLOCKED | waiting for M3 and M4 |
-| M6 Full Export | BLOCKED | waiting for sample validation |
+| M1 Local Environment | PASS | repository layout, environment audit, and requirements recorded |
+| M2 AOI South Sulawesi | PASS | one South Sulawesi feature validated in GEE |
+| M3 Sentinel-2 Pipeline | PASS | 2021 composite and cloud masking validated |
+| M4 WorldCover Pipeline | PASS | categorical remapping and label handling validated |
+| M5 Export Grid and Pilot Validation | PASS | 55-tile grid plus three accepted V2 pilots; all pilot audits PASS |
+| M6 Full Export and Raster Audit | IN_PROGRESS | TASK 6.1 auditor PASS; batch_04 production export and local raster audit PASS; 5 of 55 production tiles passed; 50 remain |
 | M7 Patch Dataset | BLOCKED | waiting for raster audit |
 | M8 Model Preparation | BLOCKED | waiting for dataset split |
 | M9 Training | BLOCKED | waiting for model smoke test |
