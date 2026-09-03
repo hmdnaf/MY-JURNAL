@@ -5,9 +5,9 @@
 - **Target Task:** `TASK 5.4 — Run Full Tiled Export` (Preparation Only)
 - **Document Date:** 3 August 2026
 - **Authoritative Reference:** [docs/TASK.md](file:///h:/segFormer/docs/TASK.md)
-- **Execution Authority:** **BOOKKEEPING UPDATED AFTER AUTHORIZED BATCH_04 ONLY; NEXT BATCH NOT AUTHORIZED**
+- **Execution Authority:** **BOOKKEEPING UPDATED AFTER AUTHORIZED BATCH_04 AND BATCH_08 ONLY; NEXT BATCH NOT AUTHORIZED**
 - **Purpose:** Define the comprehensive, non-executable technical strategy for a safe, auditable, batched full tiled export of the 5-band Sentinel-2 and ESA WorldCover dataset over Provinsi Sulawesi Selatan.
-- **Current milestone state:** M5 `PASS`; TASK 6.1 `PASS`; M6 `IN_PROGRESS`; production export artifacts `PREPARED`; batch_04 production export, local raster audit, and Gate 4 are `PASS`; batch_04 manifest rows are `AUDITED_PASS`; 5 of 55 production tiles passed; 50 production tiles remain.
+- **Current milestone state:** M5 `PASS`; TASK 6.1 `PASS`; M6 `IN_PROGRESS`; production export artifacts `PREPARED`; batch_04 and batch_08 production export, local raster audit, and Gate 4 are `PASS`; batch_04 and batch_08 manifest rows are `AUDITED_PASS`; 10 of 55 production tiles passed; 45 production tiles remain.
 
 ## 2. Current Verified Dataset State
 | Parameter | Authoritative Value | Source / Evidence |
@@ -23,7 +23,8 @@
 | **Accepted Vegetated/Mountainous Pilot V2** | `SULSEL_2021_SULSEL_R009_C004_S2WC_V2.tif` | Local raster exists; final pilot status `PASS` |
 | **Accepted Low-Coverage Pilot V2** | `SULSEL_2021_SULSEL_R005_C000_S2WC_V2.tif` | Manual QGIS audit `PASS` |
 | **Accepted Production Batch_04** | `logs/batch_04_raster_audit.md` | 5/5 production GeoTIFFs exported, downloaded locally, and automated local raster audit `PASS` |
-| **Local Drive `H:` Free Space** | `8.578407 GiB` (`9,210,994,688 bytes`) | Batch_04 Gate-4 check recorded in `logs/batch_04_raster_audit.md` |
+| **Accepted Production Batch_08** | `logs/batch_08_raster_audit.md` | 5/5 production GeoTIFFs exported, downloaded locally, automated local raster audit `PASS`, and Gate 4 `PASS` |
+| **Latest Local Drive `H:` Free Space** | `7.422058 GiB` (`7,969,374,208 bytes`) | Batch_08 Gate-4 check recorded in `logs/batch_08_raster_audit.md` |
 | **Local RAM Capacity** | `~7.35 GB` total visible (`~655 MB` free physical) | CPU-only development machine; requires windowed I/O |
 | **Local GPU Capacity** | Integrated AMD Radeon (No CUDA) | Training offloaded to Google Colab GPU |
 
@@ -135,7 +136,7 @@ pilot. They are not a statement that pilot export is still pending.
 - All three corrected V2 rasters have final pilot audit status: PASS.
 - `SULSEL_R005_C000` manual QGIS audit, including integer labels and visual
   image-label alignment: PASS.
-- Full 55-tile export: IN_PROGRESS; batch_04 passed and 50 production tiles remain.
+- Full 55-tile export: IN_PROGRESS; batch_04 and batch_08 passed, and 45 production tiles remain.
 
 ## 7. Batch Export Strategy
 
@@ -157,7 +158,7 @@ Batch storage and risk analysis:
 - Worst-case raw reference for 5 complete tiles is approximately **`2.33 GiB`**
   (`5 × 476.84 MiB`).
 - Temporary download files and duplicate copies may increase peak storage usage.
-- Production export is still pending explicit user authorization for every next batch after batch_04.
+- Production export is still pending explicit user authorization for every next batch after batch_08.
 - **No batch size guarantees zero storage risk.**
 
 ## 8. File and Folder Naming
@@ -183,7 +184,8 @@ Batch storage and risk analysis:
   ├── ...
   └── batch_11\
   ```
-  Batch_04 is currently stored at `data/raw/full/batch_04/`. Pilot rasters
+  Batch_04 is currently stored at `data/raw/full/batch_04/`; batch_08 is stored
+  at `data/raw/full/batch_08/`. Pilot rasters
   remain separate under `data/raw/pilot/`.
 
 ## 9. Export Manifest Design
@@ -221,9 +223,9 @@ Batch storage and risk analysis:
   14. `expected_nodata`: `-9999`.
   15. `status`: one approved status value from the manifest lifecycle vocabulary above.
 
-Batch_04 rows are the first production rows promoted to `AUDITED_PASS` after
-local raster audit. Checksums, storage checks, and manual visual evidence are
-kept in batch audit records without adding manifest columns.
+Batch_04 and batch_08 rows are the production rows currently promoted to
+`AUDITED_PASS` after local raster audit. Checksums, storage checks, and manual
+visual evidence are kept in batch audit records without adding manifest columns.
 
 ## 10. Validation Gates
 
@@ -261,8 +263,8 @@ kept in batch audit records without adding manifest columns.
   - `[x]` Deterministic per-batch Google Drive folder convention verified against the production script and batch_04 output.
   - `[ ]` Local storage management and cleanup strategy approved.
 
-Batch_04 is closed for bookkeeping only. These checked items do not authorize
-any next production batch.
+Batch_04 and batch_08 are closed for bookkeeping only. These checked items do
+not authorize any next production batch.
 
 ### Gate 4 — After Each Production Batch (Batch Verification Gate)
 - **Checklist:**
@@ -294,6 +296,28 @@ Batch_04 record:
 - Human spot-check tiles: `SULSEL_R005_C001` and `SULSEL_R005_C004`
 - Overall Gate 4: PASS for batch_04 only
 
+Batch_08 record:
+
+- GEE preflight: PASS
+- GEE task creation: PASS
+- GEE task reconciliation: PASS, 5/5 COMPLETED
+- Google Drive completeness: PASS
+- Download reconciliation: PASS, 5/5
+- Automated structural raster audit: PASS, 5/5
+- Manifest status: AUDITED_PASS
+- Invalid label pixels: 0
+- Fractional labels: none
+- All-NoData tiles: none
+- Passed production tiles: 10 of 55
+- Remaining production tiles: 45
+- Audit record: `logs/batch_08_raster_audit.md`
+- SHA-256 capture: PASS, 5/5
+- Local storage >3.0 GiB: PASS (`7,969,374,208` bytes; `7.422058 GiB`)
+- Production QGIS visual evidence: present under `docs/evidence/batch08_qgis_spotcheck/`
+- Human QGIS spot-check: PASS, exactly 2 production tiles
+- Human spot-check tiles: `SULSEL_R009_C007` and `SULSEL_R009_C004`
+- FINAL GATE-4 STATUS: PASS for batch_08 only
+
 ### Gate 5 — Full Export Completion (Final Acceptance Gate)
 - **Checklist:**
   - `[ ]` All required production rows are resolved under the approved `status` lifecycle.
@@ -305,7 +329,7 @@ Batch_04 record:
   - `[ ]` Final dataset audit report completed and signed off.
 
 ## 11. Storage Management
-- **Local Storage Constraint:** Project drive `H:\segFormer` has `8.578407 GiB` free space at the batch_04 Gate-4 check. 55 complete raw tiles represent `~26.2 GiB` raw reference before compression or format overhead.
+- **Local Storage Constraint:** Project drive `H:\segFormer` has `7.422058 GiB` free space at the batch_08 Gate-4 check. 55 complete raw tiles represent `~26.2 GiB` raw reference before compression or format overhead.
 - **Storage Management Rules:**
   1. **Batch Download Buffer:** Download no more than 1 batch (`5 tiles` ≈ `2.33 GiB` worst-case raw reference) at a time from Google Drive.
   2. **No Temporary Duplication:** Immediately delete Google Drive `.zip` download archives or redundant copies after extracting and verifying the `.tif` files. Never retain both `.zip` and `.tif` simultaneously.
@@ -384,7 +408,7 @@ GEE export tasks.
 
 ## 17. Final Planning Status
 ```text
-FULL EXPORT PLANNING STATUS: PRE-PRODUCTION ARTIFACTS PREPARED; BATCH_04 BOOKKEEPING CLOSED
+FULL EXPORT PLANNING STATUS: PRE-PRODUCTION ARTIFACTS PREPARED; BATCH_04 AND BATCH_08 BOOKKEEPING CLOSED
 
 THREE-PILOT V2 EXPORT STATUS: COMPLETED
 
@@ -400,17 +424,25 @@ BATCH_04 MANIFEST STATUS: AUDITED_PASS
 
 BATCH_04 GATE-4 STATUS: PASS
 
-PASSED PRODUCTION TILES: 5 OF 55
+BATCH_08 PRODUCTION EXPORT STATUS: COMPLETED
 
-REMAINING PRODUCTION TILES: 50
+BATCH_08 LOCAL RASTER AUDIT STATUS: PASS
+
+BATCH_08 MANIFEST STATUS: AUDITED_PASS
+
+BATCH_08 GATE-4 STATUS: PASS
+
+PASSED PRODUCTION TILES: 10 OF 55
+
+REMAINING PRODUCTION TILES: 45
 
 PRODUCTION TILE SIZE STATUS: APPROVED_FOR_PRODUCTION
 
 PRODUCTION EXPORT SCRIPT STATUS: PREPARED; BOTH SAFETY SWITCHES OFF
 
-PRODUCTION MANIFEST STATUS: 5 AUDITED_PASS; 50 EXPECTED_PENDING
+PRODUCTION MANIFEST STATUS: 10 AUDITED_PASS; 45 EXPECTED_PENDING
 
-TASK 5.4 EXECUTION STATUS: IN_PROGRESS; BATCH_04 PASS; 50 PRODUCTION TILES REMAIN
+TASK 5.4 EXECUTION STATUS: IN_PROGRESS; BATCH_04 AND BATCH_08 PASS; 45 PRODUCTION TILES REMAIN
 
 M5 STATUS: PASS
 

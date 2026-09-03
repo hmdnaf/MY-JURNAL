@@ -8,7 +8,7 @@
 - Audit command: `.\.venv\Scripts\python.exe src/data/audit_raster.py <raster> --expected-width 5000 --expected-height 5000 --fail-on-all-nodata`
 - Audit mode: read-only raster audit
 - Automated raster audit batch status: PASS
-- Gate 4 status: NOT CLOSED; SHA-256 and local storage checks are recorded below, and human QGIS spot-check is pending
+- Gate 4 status: PASS for batch_08 only
 
 ## Local File Reconciliation
 
@@ -214,21 +214,46 @@ Pixel accounting status: PASS
 - free GiB: 7.422058
 - >3.0 GiB Gate-4 buffer: PASS
 
-### Production QGIS Visual Spot-Check
+## Human QGIS Production Spot-Check
 
-- evidence directory: `docs/evidence/batch08_qgis_spotcheck/`
-- dedicated production evidence already exists: NO
-- status: PENDING_HUMAN_QGIS_SPOT_CHECK
-- recommended human tile: `SULSEL_R009_C007`
-- reason: extreme low coverage; 1561 valid pixels, 0.006244% coverage, labels 0,2
-- recommended human tile: `SULSEL_R009_C004`
-- reason: mountainous/vegetated production canary with accepted V2 pilot baseline
-- Gate 4 final status: NOT CLOSED; pending human QGIS production spot-check
+Evidence directory: `docs/evidence/batch08_qgis_spotcheck/`
+
+Evidence files found:
+
+- `docs/evidence/batch08_qgis_spotcheck/batch08_qgis_r009_c004_01_label_unique_values.png`
+- `docs/evidence/batch08_qgis_spotcheck/batch08_qgis_r009_c004_02_rgb_label_alignment.png`
+- `docs/evidence/batch08_qgis_spotcheck/batch08_qgis_r009_c007_01_label_unique_values.png`
+- `docs/evidence/batch08_qgis_spotcheck/batch08_qgis_r009_c007_02_rgb_label_alignment.png`
+
+### R009_C007
+
+- visual status: PASS
+- Band 5 unique values: PASS
+- observed values: 0,2
+- RGB bands: B4/B3/B2
+- RGB-label alignment: PASS
+- systematic offset observed: NO
+- rotation observed: NO
+- note: extreme low coverage is expected
+
+### R009_C004
+
+- visual status: PASS
+- Band 5 unique values: PASS
+- observed values: 0,2,3,4,5,7,8
+- RGB bands: B4/B3/B2
+- RGB-label alignment: PASS
+- systematic offset observed: NO
+- rotation observed: NO
+- note: mountainous/vegetated production canary remains consistent with accepted V2 pilot
+
+Human QGIS production spot-check status: PASS for exactly 2 production tiles.
+
+Batch_08 Gate 4 final status: PASS for batch_08 only.
 
 ## Closure Note
 
-Batch_08 has passed the automated local raster audit. SHA-256 checksum capture
-and local storage buffer validation are recorded above. Batch_08 Gate 4 is not
-yet complete; human QGIS production spot-check remains pending. M6 remains
-`IN_PROGRESS`; 10 of 55 production rasters are `AUDITED_PASS`, and 45 remain
-`EXPECTED_PENDING`.
+Batch_08 has passed the automated local raster audit, SHA-256 checksum capture,
+local storage buffer validation, and human QGIS production spot-check. Batch_08
+Gate 4 is `PASS` for batch_08 only. M6 remains `IN_PROGRESS`; 10 of 55
+production rasters are `AUDITED_PASS`, and 45 remain `EXPECTED_PENDING`.
