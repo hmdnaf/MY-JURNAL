@@ -35,7 +35,7 @@ var ENABLE_PRODUCTION_EXPORT_TASKS = false;
 var PREFLIGHT_CONFIRMED_BY_HUMAN = false;
 
 // Conservative production batch size: 5 tiles.
-var ACTIVE_BATCH_ID = 'batch_08';
+var ACTIVE_BATCH_ID = 'batch_05';
 
 // Optional targeted rerun mechanism.
 // Leave empty for normal batch execution.
